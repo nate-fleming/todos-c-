@@ -62,7 +62,7 @@ namespace test_api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest("Not a valid model");
 
-            var existingTodo = await db.Todos.FirstAsync(t => t.Id == todo.Id);
+            var existingTodo = await db.Todos.Where(t => t.Id == todo.Id).FirstOrDefaultAsync();
 
             if (existingTodo != null)
             {
@@ -92,7 +92,7 @@ namespace test_api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var todo = await db.Todos.FirstAsync(t => t.Id == id);
+            var todo = await db.Todos.Where(t => t.Id == id).FirstOrDefaultAsync();
 
             if (todo != null)
             {
